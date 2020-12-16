@@ -32,7 +32,6 @@ header > h1 {
     padding-top: 50px;
     width: 80%;
     height: 85%;
-
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
@@ -42,9 +41,11 @@ header > h1 {
 
 .book-card {
     border: 1px solid black;
-    
+    font-size: 12px;    
+    border-radius: 20px;
 }
 
-.book-card p {
-    font-size: 12px;
+.book-card h4 {
+    font-size: 150%;
+    margin-bottom: 10px;
 }

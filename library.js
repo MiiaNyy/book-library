@@ -3,10 +3,10 @@ let gridContainer = document.querySelector('.grid-container');
 let library = [];
 
 class Book {
-    constructor(title, author, pageCount, readingStatus) {
+    constructor(title, author, pages, readingStatus) {
         this.title = title;
         this.author = author;
-        this.pageCount = pageCount;
+        this.pages = pages;
         this.readingStatus = readingStatus;
     }
     info() {
@@ -16,55 +16,55 @@ class Book {
             this.readingStatus = 'not read it yet.';
         }
 
-        return this.title + ' by ' + this.author + ' is ' + this.pageCount + ' long. I have ' + this.readingStatus;
+        return this.title + ' by ' + this.author + ' is ' + this.pages + ' long. I have ' + this.readingStatus;
 
     }
 }
 
 let hobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-let hungerGames = new Book('Hunger Games', 'Stacey Mellody', 465, true)
+let hungerGames = new Book('Hunger Games', 'Stacey Mellody', 465, true);
+let vagabond = new Book('The Vagabond', 'James Potts', 241, true);
 
 function addBookToLibrary() {
     library.push(hobbit);
     library.push(hungerGames);
+    library.push(vagabond);
+
 }
 
 function displayBook() {
-    let title = document.createElement('h4');
-    let author = document.createElement('p');
-    let pages = document.createElement('p');
-    let readingStatus = document.createElement('p');
 
-    let bookCard;
 
-    for(let i = 0; i < library.length; i++) {
-        bookCard = document.createElement('div');
+    for (let i = 0; i < library.length; i++) {
+        let bookObj = library[i];
+
+        let bookCard = document.createElement('div');
         bookCard.classList.add('book-card');
         gridContainer.appendChild(bookCard);
-        console.log('Book card number ' + (i + 1) + ' created');
-    }
 
-    library.forEach(function (e) {
+        for (let key in bookObj) {
+            switch (key) {
+                case 'title':
+                    bookCard.innerHTML += "<h4>" + bookObj[key] + "</h4>";
+                    break;
+                case 'author':
+                    bookCard.innerHTML += "<p>Author: " + bookObj[key] + "</p>";
+                    break;
+                case 'pages':
+                    bookCard.innerHTML += "<p> " + bookObj[key] + " pages</p>";
+                    break;
+                case 'readingStatus':
+                    if(bookObj[key]) {
+                        bookCard.innerHTML += "<p>Read &#9989; </p>";
+                    } else {
+                        bookCard.innerHTML += "<p>Read &#10060;</p>";
+                    }
+                    break;
+                    }
 
-        title.innerText = e.title;
-        author.innerText = 'Author: ' + e.author;
-        pages.innerText = e.pageCount + ' pages long'
-
-        if (readingStatus) {
-            readingStatus.innerText = 'Read';
-        } else {
-            readingStatus.innerText = 'Not read yet.';
+            }
         }
-
-        bookCard.appendChild(title);
-        bookCard.appendChild(author);
-        bookCard.appendChild(pages);
-        bookCard.appendChild(readingStatus);
-
-    })
-
-}
-
+    }
 
 
 
