@@ -31,11 +31,12 @@ form {
     border-radius: 15px;
     box-shadow: 4px 4px 7px -1px rgba(63, 61, 61, 0.75);
     position: absolute;
-    top: 130px;
-    right: 250px;
+    top: 20%;
+    right: 40%;
     z-index: 1;
     display: none;
 }
+
 
 form h2 {
     text-align: center;
@@ -67,14 +68,16 @@ input[type="radio"] {
     width: 100%;
     height: 100%;
 }
+
 .library {
     text-align: center;
     margin: 40px auto;
     width: 75%;
-    height: 500px;
-    background-color: rgba(238, 235, 235, 0.89);
-    border-radius: 15px;
+    height: 700px;
+    background-color: rgba(0, 0, 0, 0.308);
     border: 1px solid black;
+    border-radius: 15px;
+
 }
 
 .grid-container {
@@ -93,7 +96,7 @@ input[type="radio"] {
     font-size: 12px;
     border-radius: 20px;
     box-shadow: 5px 5px 17px -1px rgba(79, 79, 79, 0.79);
-    background-color: rgba(255, 255, 255, 0.822);
+    background-color: rgba(255, 255, 255, 0.952);
     transition-duration: 1s;
 }
 
@@ -106,6 +109,7 @@ input[type="radio"] {
     margin-bottom: 10px;
 }
 
+
 /*inside book-card button*/
 .reading-status-btn {
     width: 80px;
@@ -113,7 +117,7 @@ input[type="radio"] {
     margin-bottom: 12px;
     border-radius: 10px;
     border: none;
-    box-shadow: 4px 4px 7px -1px rgba(50, 50, 50, 0.75);    
+    box-shadow: 4px 4px 7px -1px rgba(50, 50, 50, 0.75);
     font-size: 15px;
     transition-duration: 0.5s;
     background-color: #06f096;
@@ -133,18 +137,18 @@ input[type="radio"] {
 }
 
 @keyframes rotation {
-  25% {
-    transform: rotate(5deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  75% {
-    transform: rotate(-5deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
+    25% {
+        transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 
@@ -157,8 +161,8 @@ input[type="radio"] {
     margin: auto;
     border-radius: 40px;
     position: absolute;
-    top: 650px;
-    right: 20px;
+    top: 850px;
+    right: 90px;
     z-index: 1;
     transition-duration: 0.5s;
 }
@@ -169,6 +173,20 @@ input[type="radio"] {
 
 
 /*----------Form------------*/
+
+.close-window {    
+    text-align: center;
+    width: 5%;
+    height: 5%;
+    margin-left: 93%;
+    margin-top: 5px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.close-window:hover {
+    color: rgb(126, 126, 126);
+}
 
 .divider {
     width: 50%;
@@ -182,23 +200,24 @@ input[type="radio"] {
     margin-left: 50px;
     font-size: 18px;
 }
+
 .book-button {
     margin-top: 10px;
     width: 100px;
     height: 50px;
     border-radius: 10px;
     border: none;
-    box-shadow: 4px 4px 7px -1px rgba(50, 50, 50, 0.75);    
+    box-shadow: 4px 4px 7px -1px rgba(50, 50, 50, 0.75);
     font-size: 17px;
     transition-duration: 0.5s;
-    }
+}
 
-.book-button:hover{
+.book-button:hover {
     transform: scale(1.1);
 }
 
 
- /* The radio button container */
+/* The radio button container */
 .radio-container {
     display: block;
     position: relative;
@@ -232,18 +251,30 @@ input[type="radio"] {
 }
 
 /* On mouse-over, add a grey background color */
-.radio-container:hover input ~ .checkmark {
+.radio-container:hover input~.checkmark {
     background-color: #ccc;
 }
 
 /* When the radio button is checked, add a blue background */
-.radio-container input:checked ~ .checkmark {
+.radio-container input:checked~.checkmark {
     background-color: rgb(53, 215, 243);
 }
 
+/* Show green borders when valid */
+input[data-state="valid"] {
+    border-color: hsl(120, 76%, 50%);
+}
+
+/* Show red borders when filled, but invalid */
+input[data-state="invalid"] {
+    border-color: hsl(0, 76%, 50%);
+    ;
+}
+
+
 #add-book-btn {
     margin-left: 100px;
-    background-color:rgb(8, 202, 236);
+    background-color: rgb(8, 202, 236);
 }
 
 #reset-btn {
@@ -252,7 +283,7 @@ input[type="radio"] {
 }
 
 #add-book-btn:hover {
-    background-color:rgb(98, 135, 255);
+    background-color: rgb(98, 135, 255);
 }
 
 #reset-btn:hover {
@@ -261,13 +292,21 @@ input[type="radio"] {
 
 
 @media only screen and (max-width: 1100px) {
+    form {
+        top: 20%;
+        right: 30%;
+    }
+
     .grid-container {
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(4, 1fr);
     }
+
+
 }
 
 @media only screen and (max-width: 800px) {
+
     .grid-container {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(4, 1fr);
