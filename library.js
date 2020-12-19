@@ -3,11 +3,16 @@ let gridContainer = document.querySelector('.grid-container');
 
 let form = document.querySelector('form');
 
-let addBookButton = document.querySelector('#add-book-btn');
+let addBookBtn = document.querySelector('#add-book-btn');
+//On the book-card div
 let readingStatusBtn = document.querySelector('.reading-status-btn');
 
-let bookFormBtn = document.querySelector('.add-book');
-let closeWindowBtn = document.querySelector('.close-window');
+let openFormBtn = document.querySelector('.add-book');
+let closeFormBtn = document.querySelector('.close-window');
+
+let closeBookCardBtn = document.querySelector('.close-book-card');
+
+let bookCard = document.querySelector('.book-card');
 
 
 let library = [];
@@ -22,49 +27,24 @@ class Book {
     }
 }
 
-function addBookToLibrary(book) {
+function pushBookToLibraryArr(book) {
     library.push(book);
 }
 
-function checkIfEmpty() {
-    const input = document.querySelectorAll('input');
-
-    input.forEach(element => {
-        element.addEventListener('input', evt => {
-            const value = element.value;
-            console.log(element.value)
-            if (!value) {
-                element.dataset.state = ''
-                return
-            }
-            
-
-            const trimmed = value.trim()
-
-            if (trimmed) {
-                element.dataset.state = 'valid';
-            } else {
-                element.dataset.state = 'invalid';
-            }
-        })
-    });
 
 
-
-}
-
-
-function addBookToView(bookObj) {
+function addBookToLibrary(bookObj) {
     let bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
+    bookCard.innerHTML += "<span class='close-book-card'>&#10006;</span>"
     gridContainer.appendChild(bookCard);
 
+
     for (let key in bookObj) {
-        checkIfEmpty(bookObj[key]);
-        console.log(key);
         switch (key) {
             case 'title':
-                bookCard.innerHTML += "<div><h4>" + bookObj[key] + "</h4></div>";
+                //add right class name whitout spaces, so we can compare it with the right object
+                bookCard.innerHTML += "<div class='" + bookObj[key].replace(/\s+/g, '') + "'><h4>" + bookObj[key] + "</h4></div>";
                 break;
             case 'author':
                 bookCard.innerHTML += "<div><p>Author:<br> " + bookObj[key] + "</p></div>";
@@ -93,14 +73,9 @@ function addBookToView(bookObj) {
 }
 
 function displayBooks() {
-
     for (let i = 0; i < library.length; i++) {
-        addBookToView(library[i]);
+        addBookToLibrary(library[i]);
     }
-}
-
-function clearView() {
-    gridContainer.innerHTML = '';
 }
 
 function getNewBookObject() {
@@ -114,13 +89,8 @@ function getNewBookObject() {
     }
 
     newBook = new Book(newBook[0], newBook[1], newBook[2], newBook[3], newBook[4]);
+    pushBookToLibraryArr(newBook);
     addBookToLibrary(newBook);
-    addBookToView(newBook);
-
-
-    console.log(Object.values(newBook));
-
-
 }
 
 
@@ -133,12 +103,56 @@ function toggleFormVisibility() {
     }
 }
 
-closeWindowBtn.addEventListener('click', function() {
+function removeBookFromView(event) {
+
+    let parent = event.target.parentElement
+
+    if (parent.className == 'book-card') {
+        parent.style.display = 'none';
+
+        removeBookFromLibrary(parent)
+
+    }
+
+}
+
+
+function removeBookFromLibrary(parent) {
+
+    let child = parent.childNodes;
+
+    //Find the right class of the element and compare that to the library object and remove the right object
+    for (let i = 0; i < child.length; i++) {
+        let divsName = child[i].className;
+
+        console.log('librarys length is ' + library.length );
+        for (let j = 0; j < library.length; j++) {           
+
+            //Remove all of the spaces so we can compare titles
+            let objTitle = library[j].title.replace(/\s+/g, '');
+            if (objTitle == divsName) {
+                library.splice(j, 1);
+            }
+        }
+    }
+    console.log('Library is ' + library.length + ' items long after removin loop');
+}
+
+
+
+
+
+
+
+
+closeFormBtn.addEventListener('click', function () {
     form.style.display = 'none';
 })
 
-addBookButton.addEventListener('click', function () {
+addBookBtn.addEventListener('click', function () {
     getNewBookObject();
+    form.style.display = 'none';
+    form.reset();
 
 })
 
@@ -146,10 +160,16 @@ readingStatusBtn.addEventListener('click', function (e) {
     changeReadingStatus(e);
 })
 
-bookFormBtn.addEventListener('click', function () {
+openFormBtn.addEventListener('click', function () {
     toggleFormVisibility();
     form.classList.toggle('alert')
 
 })
 
-checkIfEmpty();
+
+document.addEventListener('click', function (event) {
+    removeBookFromView(event)
+
+
+
+})
