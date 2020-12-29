@@ -1,19 +1,25 @@
 body {
-    background-image: url(bookshelf.jpg);
+    background-image: url(libr1.jpg);
     background-size: cover;
-    font-family: 'Playfair Display', serif
+    font-family: 'Playfair Display', serif;
+    height: 95vh;
 }
 
 header {
     text-align: center;
     margin: auto;
-    background-color: rgba(238, 235, 235, 0.89);
+    background-color: rgba(255, 255, 255, 0.952);
     width: 75%;
-    height: 130px;
+    height: 150px;
+    box-shadow: 4px 4px 7px -1px rgba(63, 61, 61, 0.75);
+    border-radius: 15px;
+    transition-duration: 0.5s;
 }
 
 header>h1 {
     padding-top: 5px;
+    font-size: 50px;
+    margin-bottom: 10px;
 }
 
 /*add book button plus sign image*/
@@ -25,18 +31,18 @@ img {
 form {
     background-color: rgba(255, 255, 255, 0.979);
     border: 1px solid black;
-    width: 400px;
-    height: 580px;
+    width: 420px;
+    height: 600px;
     margin: 50px auto;
     border-radius: 15px;
     box-shadow: 4px 4px 7px -1px rgba(63, 61, 61, 0.75);
     position: absolute;
-    top: 20%;
+    top: 10%;
     right: 40%;
     z-index: 1;
     display: none;
+    transition: all 1s linear;
 }
-
 
 form h2 {
     text-align: center;
@@ -61,14 +67,28 @@ input[type="radio"] {
     color: #06d6a0;
 }
 
-.make-invisible {
+.hidden {
     display: none;
+  }
+  
+  .visuallyhidden {
+    opacity: 0;
+  }
+
+
+/*When form is opened, background is blurred*/
+.filter-on {
+    filter: blur(5px);
 }
 
 /*This holds all the content*/
 .container {
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.308);
+    backdrop-filter: blur(2px);
+    border-radius: 15px;
+
 }
 
 .library {
@@ -76,10 +96,7 @@ input[type="radio"] {
     margin: 40px auto;
     width: 75%;
     height: 700px;
-    background-color: rgba(0, 0, 0, 0.308);
-    border: 1px solid black;
     border-radius: 15px;
-
 }
 
 .grid-container {
@@ -95,6 +112,7 @@ input[type="radio"] {
 }
 
 .book-card {
+    text-align: left;
     font-size: 12px;
     border-radius: 20px;
     box-shadow: 5px 5px 17px -1px rgba(79, 79, 79, 0.79);
@@ -110,20 +128,22 @@ input[type="radio"] {
     font-size: 150%;
     margin-bottom: 10px;
 }
+.book-info {
+    text-align: center;
+}
 
 .close-book-card {
     position: absolute;
     width: 20px;
     height: 20px;
-    margin-left: 5px;
-    margin-top: 5px;
+    margin-left: 15px;
+    margin-top: 8px;
     color: rgb(138, 136, 136);
     cursor: pointer;
 }
 .close-book-card:hover {
     color: black;
 }
-
 
 /*inside book-card button*/
 .reading-status-btn {
@@ -143,7 +163,7 @@ input[type="radio"] {
 }
 
 .in-progress-btn {
-    background-color: rgb(98, 135, 255);
+    background-color: #fbe14b;
     font-size: 13px;
 }
 
@@ -176,7 +196,7 @@ input[type="radio"] {
     margin: auto;
     border-radius: 40px;
     position: absolute;
-    top: 850px;
+    top: 830px;
     right: 90px;
     z-index: 1;
     transition-duration: 0.5s;
@@ -190,25 +210,25 @@ input[type="radio"] {
 /*----------Form------------*/
 
 .close-window {    
-    text-align: center;
     width: 5%;
     height: 5%;
-    margin-left: 93%;
+    margin-left: 3%;
     margin-top: 5px;
     position: absolute;
     cursor: pointer;
-}
-
-.close-window:hover {
     color: rgb(126, 126, 126);
 }
 
+.close-window:hover {
+    color: rgb(42, 41, 41);
+
+}
+
 .divider {
-    width: 50%;
+    width: 200px;
     border: 3px solid rgb(28, 206, 230);
     border-radius: 5px;
     margin-bottom: 20px;
-
 }
 
 .text-label {
