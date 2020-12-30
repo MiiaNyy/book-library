@@ -12,7 +12,7 @@
         <div class="container">
             <br>
         <header>
-            <h1>Library</h1>
+            <h1>My Library</h1>
             <hr class="divider" />
             <p>
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -27,21 +27,11 @@
         <div class="library">
             <div class="grid-container">
             <!--This is where the book cards lives-->
-                <div class="book-card">
-                    <span class='close-book-card'>&#10006;</span>
-                    <div class="book-info">
-                        <div><h4>The Hobbit</h4></div>
-                        <div><p>Author:<br> J.R.R. Tolkien</p></div>
-                        <div><p> Genre:<br> Fantasy adventure</p></div>
-                        <div><p> 295 pages</p></div>
-                        <div><button class="reading-status-btn read">Read</button></div>
-                    </div>
 
-                </div>
             </div>
         </div>
 
-        <form class='alert'>
+        <form>
             <span class="close-window">&#10006;</span>
             <h2>Add Book</h2>
             <hr class="divider" />
@@ -49,21 +39,21 @@
 
                 <label for="title" class="text-label">Title:</label>
                 <br />
-                <input type="text" id="title" name="title" value="" />
+                <input class="input-field" required type="text" id="title" name="title" value="" />
                 
 
                 <br /><br />
 
                 <label for="author" class="text-label">Author:</label>
                 <br />
-                <input type="text" id="author" name="author" value="" />
+                <input class="input-field" required type="text" id="author" name="author" value="" />
                 
 
                 <br /><br />
 
                 <label for="genre" class="text-label">Genre: </label>
                 <br />
-                <input type="text" id="genre" name="genre" value="" />
+                <input class="input-field"  required type="text" id="genre" name="genre" value="" />
                 
 
                 <br /><br />
@@ -71,7 +61,7 @@
                 <label for="pages" class="text-label">How many pages?</label>
                 <br />
 
-                <input type="number" id="pages" name="pages" min="1" max="99999" />
+                <input class="input-field" required type="number" id="pages" name="pages" min="1" max="99999" value="0"/>
 
 
                 <br /><br />
@@ -109,7 +99,7 @@
                 </label>
 
 
-            <input type="button" value="Add book" class="book-button" id="add-book-btn" />
+            <input type="button" value="Add book" class="book-button" id="add-book-btn"/>
             <input type="reset" value="Reset" class="book-button" id="reset-btn" />
         </form>
         </div>

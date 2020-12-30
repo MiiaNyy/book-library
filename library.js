@@ -3,8 +3,7 @@ let gridContainer = document.querySelector('.grid-container');
 let form = document.querySelector('form');
 
 let addBookBtn = document.querySelector('#add-book-btn');
-//On the book-card div, that changes the reading status
-let readingStatusBtn = document.querySelector('.reading-status-btn');
+
 
 let openFormBtn = document.querySelector('.add-book');
 let closeFormBtn = document.querySelector('.close-window');
@@ -13,11 +12,14 @@ let closeBookCardBtn = document.querySelector('.close-book-card');
 
 let bookCard = document.querySelector('.book-card');
 
+//change name
+let formIsEmpty = false;
 
 let library = [];
 
 class Book {
     constructor(title, author, genre, pages, readingStatus) {
+        this.id = Date.now();
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -31,9 +33,12 @@ function pushBookToLibraryArr(book) {
 }
 
 //This is what is shown in the screen
-function addBookToLibrary(bookObj) {
+function addBookToLibraryView(bookObj) {
     let bookCard = document.createElement('div');
     let bookInfo = document.createElement('div');
+
+    //Add id to book card so we can identify it later
+    bookCard.setAttribute("id", bookObj.id);
 
     bookCard.classList.add('book-card');
     bookInfo.classList.add('book-info');
@@ -46,8 +51,7 @@ function addBookToLibrary(bookObj) {
     for (let key in bookObj) {
         switch (key) {
             case 'title':
-                //add title as class name whitout spaces, so we can use it later when removing object
-                bookInfo.innerHTML += "<div class='" + bookObj[key].replace(/\s+/g, '') + "'><h4>" + bookObj[key] + "</h4></div>";
+                bookInfo.innerHTML += "<div><h4>" + bookObj[key] + "</h4></div>";
                 break;
             case 'author':
                 bookInfo.innerHTML += "<div><p>Author:<br> " + bookObj[key] + "</p></div>";
@@ -75,26 +79,69 @@ function addBookToLibrary(bookObj) {
     }
 }
 
+
+
+
 function displayBooks() {
     for (let i = 0; i < library.length; i++) {
-        addBookToLibrary(library[i]);
+        addBookToLibraryView(library[i]);
+
     }
 }
 
-function getNewBookObject() {
-    let newBook = [];
+function required() {
+    let empt = document.form1.title.value;
+    if (empt === "") {
+        console.log('Please input value');
+        return false;
+    } else {
+        console.log('Code has accepted : you can try another');
+        return true;
+    }
+}
+
+function inputFieldIsEmptyWarning() {
+    let container = document.createElement('div');
+    container.innerHTML = 'All input fields have to be filled before adding the book to library!';
+    form.appendChild(container);
+}
+
+
+function addNewBookFromForm() {
+    let bookValues = [];
 
     //makes sure that right formElements are shown in the book card 
     for (let i = 0; i < form.length; i++) {
         let formElement = form.elements[i];
+
         if (formElement.name == 'title' || formElement.name == 'author' || formElement.name == 'genre' || formElement.name == 'pages' || (formElement.name == 'readingStatus' && formElement.checked)) {
-            newBook.push(formElement.value);
+            //If empty, do not submit values to the object
+            if (formElement.value === '') {
+                return;
+
+            } else
+                bookValues.push(formElement.value);
         }
     }
+    //Tsek that all of the fields are not empty
+    if (bookValues.length == 5) {
+        addNewBook(bookValues[0], bookValues[1], bookValues[2], bookValues[3], bookValues[4], true);
+        formIsEmpty = true;
+    }
 
-    newBook = new Book(newBook[0], newBook[1], newBook[2], newBook[3], newBook[4]);
+
+
+}
+
+function addNewBook(title, author, genre, pages, readingStatus, addToView) {
+
+    let newBook = new Book(title, author, genre, pages, readingStatus);
     pushBookToLibraryArr(newBook);
-    addBookToLibrary(newBook);
+    saveLibraryToStorage();
+
+    if (addToView) {
+        addBookToLibraryView(newBook);
+    }
 }
 
 
@@ -110,67 +157,56 @@ function toggleFormVisibility() {
     }
 }
 
-function removeBookFromView(event) {
+function removeBook(event) {
 
     let parent = event.target.parentElement;
     console.log(parent);
     if (parent.className == 'book-card') {
-        parent.style.display = 'none';
-        removeBookFromLibrary(parent);
+        let book = parent;
+        removeBookFromLibrary(book);
+        //Removes book from html doc
+        book.parentNode.removeChild(book);
+        saveLibraryToStorage();
     }
 }
 
-function removeBookFromLibrary(parent) {
-    let child = parent.childNodes;
-    console.log(child);
-    //Find the right class of the element and compare that to the library object and remove the right object
-    for (let i = 0; i < child.length; i++) {
-        let divsName = child[i].className;
-        console.log('librarys length is ' + library.length);
-        for (let j = 0; j < library.length; j++) {
+function removeBookFromLibrary(book) {
+    //Find right id from DOM element and compare it with library id so right object can be removed
+    let id = book.id;
+    for (let i = 0; i < library.length; i++) {
 
-            //Remove all of the spaces so we can compare titles
-            let objTitle = library[j].title.replace(/\s+/g, '');
-            if (objTitle == divsName) {
-                library.splice(j, 1);
-            }
+        if (library[i].id == id) {
+            library.splice(i, 1);
         }
     }
-    console.log('Library is ' + library.length + ' items long after removin loop');
 }
 
-function changeStatusOfObj(event) {
+function toggleReadingStatusInObj(event) {
     let element = event.target;
     let bookCardElement = element.closest('.book-card');
-    let child = bookCardElement.childNodes;
+    let id = bookCardElement.id;
 
-    //Find the right class of the element and compare that to the library 
-    //object so readingstatus can be changed from the right object
-    for (let i = 0; i < child.length; i++) {
-        let divsClass = child[i].className;
+    for (let i = 0; i < library.length; i++) {
 
-        for (let j = 0; j < library.length; j++) {
-            let objTitle = library[j].title.replace(/\s+/g, '');
-
-            if (objTitle == divsClass) {
-
-                if (library[j].readingStatus == 'read') {
-                    library[j].readingStatus = 'not-read';
-                } else if (library[j].readingStatus == 'not-read') {
-                    library[j].readingStatus = 'in-progress'
-                } else if (library[j].readingStatus == 'in-progress') {
-                    library[j].readingStatus = 'read'
-                }
-                console.log('books reading status is after pressing button: ' + library[j].readingStatus);
+        if (library[i].id == id) {
+            let status = library[i].readingStatus;
+            if (status == 'read') {
+                status = 'not-read';
+            } else if (status == 'not-read') {
+                status = 'in-progress'
+            } else if (status == 'in-progress') {
+                status = 'read'
             }
+            library[i].readingStatus = status;
+            console.log('books reading status is after pressing button: ' + library[i].readingStatus);
         }
     }
+
 }
 
-function changeReadingStatus(event) {
+function toggleReadingStatusView(event) {
     //When pressing something, we make sure that it is the right element by checking that the 
     //element contains certain classnames. After that we can change it.
-    //First change reading status from screen
     let element = event.target;
     let elementClass = element.classList;
 
@@ -190,9 +226,15 @@ function changeReadingStatus(event) {
             element.classList.add('read');
             element.innerHTML = 'Read';
         }
+
     }
-    //This changes reading status in the object
-    changeStatusOfObj(event);
+}
+
+function toggleReadingStatus(event) {
+    toggleReadingStatusView(event);
+    //changes reading status in the object
+    toggleReadingStatusInObj(event);
+    saveLibraryToStorage();
 }
 
 function removeBackgroundFilter() {
@@ -201,57 +243,78 @@ function removeBackgroundFilter() {
     openFormBtn.classList.remove('filter-on');
 }
 
+function saveLibraryToStorage() {
+    localStorage.setItem('library', JSON.stringify(library));
+}
 
+//pulls books from local storage when page is refreshed
+function readLibraryFromStorage() {
 
+    // gets information from local storage to use in displayBooks to create display
+    let libraryJson = localStorage.getItem('library');
 
-
-
-
-
-closeFormBtn.addEventListener('click', function () {
-    form.style.display = 'none';
-    removeBackgroundFilter()
-});
-
-addBookBtn.addEventListener('click', function () {
-    getNewBookObject();
-    form.style.display = 'none';
-    form.reset();
-    removeBackgroundFilter();
-});
-
-readingStatusBtn.addEventListener('click', function (e) {
-    changeReadingStatus(e);
-});
-
-openFormBtn.addEventListener('click', function () {
-    toggleFormVisibility();
-
-    //Ei oo valmis, yritin vaan saada formin transition nätisti
-
-    /*if (form.classList.contains('hidden')) {
-        form.classList.remove('hidden');
-
-        setTimeout(function () {
-            form.classList.remove('visuallyhidden');
-        }, 20);
+    if (libraryJson != null && libraryJson.length > 0) {
+        //parses a JSON string to 'normal' value, number to integar yms.
+        library = JSON.parse(libraryJson);
     } else {
-        form.classList.add('visuallyhidden');
-        form.addEventListener('transitionend', function (e) {
-            form.classList.add('hidden');
-        }, {
-            capture: false,
-            once: true,
-            passive: false
-        });
+        //If storage is empty, generoi this book to the page
+        addNewBook('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 310, 'read', false);
     }
-*/
 
-});
+}
 
 
-gridContainer.addEventListener('click', function (event) {
-    removeBookFromView(event);
-    changeReadingStatus(event)
+let inputFields = document.querySelectorAll('.input-field');
 
-});
+inputFields.forEach(function (input) {
+    input.addEventListener('keydown', function () {
+        input.style.borderColor = '#06d6a0';
+    })
+})
+
+function resetForm() {
+    removeBackgroundFilter();
+    form.reset();
+    form.style.display = 'none';
+
+    inputFields.forEach(function (input) {
+        input.style.borderColor = 'black';
+    });
+    
+}
+
+function addButtonListeners() {
+    //Closes book form
+    closeFormBtn.addEventListener('click', function () {
+        form.style.display = 'none';
+        removeBackgroundFilter();
+    });
+
+    //Adds new book to library
+    addBookBtn.addEventListener('click', function () {
+        addNewBookFromForm();
+        if (formIsEmpty) {
+            resetForm();
+        }
+    });
+
+
+    //Open add book form
+    openFormBtn.addEventListener('click', function () {
+        toggleFormVisibility();
+    });
+
+    //Delete book and toggle reading status in book cards
+    gridContainer.addEventListener('click', function (event) {
+        removeBook(event);
+        toggleReadingStatus(event)
+    });
+}
+
+function start() {
+    addButtonListeners()
+    readLibraryFromStorage();
+    displayBooks();
+}
+
+start();
