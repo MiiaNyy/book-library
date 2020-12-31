@@ -4,16 +4,26 @@ let form = document.querySelector('form');
 
 let addBookBtn = document.querySelector('#add-book-btn');
 
-
-let openFormBtn = document.querySelector('.add-book');
-let closeFormBtn = document.querySelector('.close-window');
+let openFormBtn = document.querySelector('.open-form-btn');
+let closeFormBtn = document.querySelector('.close-form-btn');
 
 let closeBookCardBtn = document.querySelector('.close-book-card');
 
 let bookCard = document.querySelector('.book-card');
 
-//change name
-let formIsEmpty = false;
+let inputFields = document.querySelectorAll('.input-field');
+
+let booksInLibrary = document.querySelector('.book-counter');
+let pagesRead = document.querySelector('.pages-counter');
+let readBooksCounter = document.querySelector('.read-books-counter');
+let inProgressCounter = document.querySelector('.in-progress-counter');
+
+booksInLibrary = 0;
+pagesRead = 0;
+readBooksCounter = 0;
+inProgressCounter = 0;
+
+let allInputFieldsFilled = false;
 
 let library = [];
 
@@ -63,7 +73,6 @@ function addBookToLibraryView(bookObj) {
                 bookInfo.innerHTML += "<div><p> " + bookObj[key] + " pages</p></div>";
                 break;
             case 'readingStatus':
-                console.log('books reading status is ' + bookObj[key]);
                 if (bookObj[key] == 'read') {
                     bookInfo.innerHTML += "<div><button class='reading-status-btn read'>Read</button></div>";
                 } else if (bookObj[key] == 'not-read') {
@@ -72,40 +81,17 @@ function addBookToLibraryView(bookObj) {
                     bookInfo.innerHTML += "<div><button class='reading-status-btn in-progress-btn'>In progress</button></div>";
                 }
                 break;
-            case ' ':
-                console.log(bookObj + ' is empty');
-                break;
         }
     }
 }
 
-
-
-
 function displayBooks() {
     for (let i = 0; i < library.length; i++) {
         addBookToLibraryView(library[i]);
-
     }
+    
+    console.log(library.length);
 }
-
-function required() {
-    let empt = document.form1.title.value;
-    if (empt === "") {
-        console.log('Please input value');
-        return false;
-    } else {
-        console.log('Code has accepted : you can try another');
-        return true;
-    }
-}
-
-function inputFieldIsEmptyWarning() {
-    let container = document.createElement('div');
-    container.innerHTML = 'All input fields have to be filled before adding the book to library!';
-    form.appendChild(container);
-}
-
 
 function addNewBookFromForm() {
     let bookValues = [];
@@ -115,22 +101,24 @@ function addNewBookFromForm() {
         let formElement = form.elements[i];
 
         if (formElement.name == 'title' || formElement.name == 'author' || formElement.name == 'genre' || formElement.name == 'pages' || (formElement.name == 'readingStatus' && formElement.checked)) {
-            //If empty, do not submit values to the object
+            //If empty, do not submit values to the object and animate form
             if (formElement.value === '') {
+                toggleFormAnimation();
                 return;
-
-            } else
+            } else {
+                allInputFieldsFilled = true;
                 bookValues.push(formElement.value);
+            }
         }
     }
-    //Tsek that all of the fields are not empty
-    if (bookValues.length == 5) {
-        addNewBook(bookValues[0], bookValues[1], bookValues[2], bookValues[3], bookValues[4], true);
-        formIsEmpty = true;
-    }
+    addNewBook(bookValues[0], bookValues[1], bookValues[2], bookValues[3], bookValues[4], true);
+}
 
-
-
+function toggleFormAnimation() {
+    form.classList.add('inputs-not-filled');
+    form.addEventListener('animationend', function() {
+        form.classList.remove('inputs-not-filled');
+    });
 }
 
 function addNewBook(title, author, genre, pages, readingStatus, addToView) {
@@ -158,12 +146,12 @@ function toggleFormVisibility() {
 }
 
 function removeBook(event) {
-
     let parent = event.target.parentElement;
-    console.log(parent);
+
     if (parent.className == 'book-card') {
         let book = parent;
         removeBookFromLibrary(book);
+
         //Removes book from html doc
         book.parentNode.removeChild(book);
         saveLibraryToStorage();
@@ -216,7 +204,6 @@ function toggleReadingStatusView(event) {
             element.classList.remove('read');
             element.classList.add('not-read-btn');
             element.innerHTML = 'Not read';
-
         } else if (elementClass.contains('not-read-btn')) {
             element.classList.remove('not-read-btn');
             element.classList.add('in-progress-btn');
@@ -226,7 +213,6 @@ function toggleReadingStatusView(event) {
             element.classList.add('read');
             element.innerHTML = 'Read';
         }
-
     }
 }
 
@@ -264,24 +250,25 @@ function readLibraryFromStorage() {
 }
 
 
-let inputFields = document.querySelectorAll('.input-field');
-
-inputFields.forEach(function (input) {
-    input.addEventListener('keydown', function () {
-        input.style.borderColor = '#06d6a0';
-    })
-})
+function addColorWhenFilled() {
+    inputFields.forEach(function (input) {
+        input.addEventListener('keydown', function () {
+            input.style.borderColor = '#06d6a0';
+        })
+    });
+}
 
 function resetForm() {
     removeBackgroundFilter();
     form.reset();
     form.style.display = 'none';
+    allInputFieldsFilled = false;
 
+    //turn inputfield border color back to normal
     inputFields.forEach(function (input) {
         input.style.borderColor = 'black';
     });
-    
-}
+};
 
 function addButtonListeners() {
     //Closes book form
@@ -290,10 +277,10 @@ function addButtonListeners() {
         removeBackgroundFilter();
     });
 
-    //Adds new book to library
+    //Adds new book to library and if input fields are filled, reset form
     addBookBtn.addEventListener('click', function () {
         addNewBookFromForm();
-        if (formIsEmpty) {
+        if (allInputFieldsFilled) {
             resetForm();
         }
     });
@@ -302,6 +289,7 @@ function addButtonListeners() {
     //Open add book form
     openFormBtn.addEventListener('click', function () {
         toggleFormVisibility();
+        addColorWhenFilled();
     });
 
     //Delete book and toggle reading status in book cards

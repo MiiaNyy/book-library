@@ -1,15 +1,16 @@
 body {
-    background-image: url(libr1.jpg);
-    background-size: cover;
     font-family: 'Playfair Display', serif;
     height: 95vh;
+    
+    background-image: url(libr1.jpg);
+    background-size: cover;
 }
 
 header {
     text-align: center;
     margin: auto;
     background-color: rgba(255, 255, 255, 0.952);
-    width: 75%;
+    max-width: 700px;
     height: 150px;
     box-shadow: 4px 4px 7px -1px rgba(63, 61, 61, 0.75);
     border-radius: 15px;
@@ -68,14 +69,41 @@ input[type="radio"] {
     color: #06d6a0;
 }
 
-.hidden {
-    display: none;
-  }
-  
-  .visuallyhidden {
-    opacity: 0;
-  }
+.book-log {   
+    font-family: sans-serif; 
+    position: absolute;
+    top: 20px;
+    margin-left: 20px;
+    width: 200px;
+    height: 160px;
+    border-radius: 5px;    
+    background-color: rgba(0, 0, 0, 0.835);
+    color: rgb(216, 213, 213);
+    
+}
 
+.book-log h2 {
+    font-family: 'Playfair Display', serif;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.log-counter {
+    margin: 5px 10px;
+}
+
+.book-log-divider {
+    background-color: #fbe14b;
+    width: 50%;
+    height: 2px;
+    border: none;
+}
+
+/*If user trys to submit book without filling input fields this animation is run in form*/
+.inputs-not-filled {
+    animation: rotation 0.2s 0.1s linear;
+}
 
 /*When form is opened, background is blurred*/
 .filter-on {
@@ -84,30 +112,28 @@ input[type="radio"] {
 
 /*This holds all the content*/
 .container {
-    width: 100%;
+    width: 80%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.308);
-    backdrop-filter: blur(2px);
+    background-color: rgba(2, 2, 2, 0.459);
+    margin: auto;
     border-radius: 15px;
-
 }
 
 .library {
     text-align: center;
     margin: 40px auto;
     width: 75%;
-    height: 700px;
     border-radius: 15px;
 }
 
 .grid-container {
-    margin: auto;
-    padding-top: 50px;
+    text-align: center;
+    margin: 0px auto;
+    padding: 30px 50px;
     width: 80%;
-    height: 100%;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 200px);;
+    grid-auto-rows: minmax(150px, 1fr);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
 }
@@ -172,6 +198,8 @@ input[type="radio"] {
     animation: rotation 0.5s 0.1s linear;
 }
 
+
+
 @keyframes rotation {
     25% {
         transform: rotate(5deg);
@@ -188,7 +216,7 @@ input[type="radio"] {
 }
 
 
-.add-book {
+.open-form-btn {
     background-color: rgb(0, 200, 236);
     height: 50px;
     width: 50px;
@@ -202,14 +230,14 @@ input[type="radio"] {
     transition-duration: 0.5s;
 }
 
-.add-book:hover {
+.open-form-btn:hover {
     transform: rotate(45deg) scale(1.2);
 }
 
 
 /*----------Form------------*/
 
-.close-window {    
+.close-form-btn {    
     width: 5%;
     height: 5%;
     margin-left: 3%;
@@ -219,7 +247,7 @@ input[type="radio"] {
     color: rgb(126, 126, 126);
 }
 
-.close-window:hover {
+.close-form-btn:hover {
     color: rgb(42, 41, 41);
 
 }
@@ -326,35 +354,51 @@ input[data-state="invalid"] {
 }
 
 
-@media only screen and (max-width: 1100px) {
-    form {
-        top: 20%;
-        right: 30%;
+@media only screen and (max-width: 1600px) and (min-width: 1200px) { 
+    .book-log {
+        left: 10px;
+        
     }
+}
 
+@media only screen and (max-width: 1200px) {
+
+    .book-log {
+        top: 290px;
+        left: 0;
+    }
     .grid-container {
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 1fr);
     }
 
 
 }
 
-@media only screen and (max-width: 800px) {
+
+@media only screen and (max-width: 950px) {
 
     .grid-container {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 1fr);
     }
 }
 
-@media only screen and (max-width: 500px) {
-    .library {
-        height: fit-content;
+@media only screen and (max-width: 550px) {
+
+    .book-log {
+        margin: auto;
     }
 
     .grid-container {
         grid-template-columns: repeat(1, 1fr);
-        grid-auto-rows: minmax(min-content, max-content);
+    }
+
+    .book-card {
+        font-size: 18px;
+    }
+
+    .reading-status-btn {
+        width: 100px;
+        height: 50px;
+        font-size: 18px;
     }
 }
