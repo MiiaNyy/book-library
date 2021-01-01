@@ -21,6 +21,8 @@ header>h1 {
     padding-top: 5px;
     font-size: 50px;
     margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(150, 150, 150, 0.829);
+
 }
 
 /*add book button plus sign image*/
@@ -34,15 +36,17 @@ form {
     border: 1px solid black;
     width: 420px;
     height: 600px;
-    margin: 50px auto;
     border-radius: 15px;
     box-shadow: 4px 4px 7px -1px rgba(63, 61, 61, 0.75);
-    position: absolute;
-    top: 10%;
-    right: 40%;
     z-index: 1;
     display: none;
     transition: all 1s linear;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    top: 100px;
+    margin-left: auto; 
+    margin-right: auto; 
 }
 
 form h2 {
@@ -68,35 +72,39 @@ input[type="radio"] {
     margin-left: 100px;
     color: #06d6a0;
 }
-
-.book-log {   
-    font-family: sans-serif; 
-    position: absolute;
-    top: 20px;
-    margin-left: 20px;
-    width: 200px;
-    height: 160px;
-    border-radius: 5px;    
-    background-color: rgba(0, 0, 0, 0.835);
-    color: rgb(216, 213, 213);
-    
+#book-log {   
+    background-color: #fffffff5;
+    font-size: 1em;
+    border: 10px double rgba(10, 10, 10, 0.041);
 }
 
-.book-log h2 {
-    font-family: 'Playfair Display', serif;
-    margin-top: 10px;
+.lib-logo-container {
     text-align: center;
+}
+
+.logo {
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+#book-log h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 2px;
     margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(179, 179, 179, 0.829);
+
 }
 
 .log-counter {
-    margin: 5px 10px;
+    margin-left: 15px;
 }
 
 .book-log-divider {
-    background-color: #fbe14b;
-    width: 50%;
-    height: 2px;
+    background-color: #f3d949;
+    width: 60%;
+    height: 3px;
     border: none;
 }
 
@@ -114,7 +122,7 @@ input[type="radio"] {
 .container {
     width: 80%;
     height: 100%;
-    background-color: rgba(2, 2, 2, 0.459);
+
     margin: auto;
     border-radius: 15px;
 }
@@ -123,27 +131,28 @@ input[type="radio"] {
     text-align: center;
     margin: 40px auto;
     width: 75%;
+    height: auto;
     border-radius: 15px;
 }
 
 .grid-container {
     text-align: center;
     margin: 0px auto;
-    padding: 30px 50px;
-    width: 80%;
     display: grid;
+    width: auto;
     grid-template-columns: repeat(5, 200px);;
-    grid-auto-rows: minmax(150px, 1fr);
+    grid-auto-rows: minmax(260px, 280px) 260px;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
+    justify-content:baseline;
 }
 
 .book-card {
     text-align: left;
-    font-size: 12px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 17px -1px rgba(79, 79, 79, 0.79);
-    background-color: rgba(255, 255, 255, 0.952);
+    font-size: 14px;
+    border-radius: 20px;    
+    box-shadow: 5px 5px 17px -1px rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.986);
     transition-duration: 1s;
 }
 
@@ -152,8 +161,9 @@ input[type="radio"] {
 }
 
 .book-card h4 {
-    font-size: 150%;
+    font-size: 170%;
     margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(179, 179, 179, 0.829);
 }
 .book-info {
     text-align: center;
@@ -323,16 +333,7 @@ input[type="radio"] {
     background-color: rgb(53, 215, 243);
 }
 
-/* Show green borders when valid */
-input[data-state="valid"] {
-    border-color: hsl(120, 76%, 50%);
-}
 
-/* Show red borders when filled, but invalid */
-input[data-state="invalid"] {
-    border-color: hsl(0, 76%, 50%);
-    ;
-}
 
 
 #add-book-btn {
@@ -354,51 +355,57 @@ input[data-state="invalid"] {
 }
 
 
-@media only screen and (max-width: 1600px) and (min-width: 1200px) { 
-    .book-log {
-        left: 10px;
-        
-    }
-}
+/*1000 asti on hyvä*/
 
-@media only screen and (max-width: 1200px) {
-
-    .book-log {
-        top: 290px;
-        left: 0;
-    }
-    .grid-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-
-}
 
 
 @media only screen and (max-width: 950px) {
 
     .grid-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 235px);
+
+
     }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 720px) {
 
-    .book-log {
-        margin: auto;
+    .grid-container {
+        grid-template-columns: repeat(2, 200px);
+    }
+
+}
+
+@media only screen and (max-width: 570px) {
+
+    form {
+        width: 330px;
+    }
+
+    #add-book-btn {
+        margin-left: 50px;
+    }
+    
+    #reset-btn {
+        margin-left: 20px;
+        
     }
 
     .grid-container {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 180px);
     }
 
-    .book-card {
-        font-size: 18px;
+}
+
+@media only screen and (max-width: 530px) {
+    .grid-container {        
+        grid-template-columns: repeat(1, 200px);
+        justify-content: center;
     }
 
-    .reading-status-btn {
-        width: 100px;
-        height: 50px;
-        font-size: 18px;
+    .open-form-btn {
+        top: 20px;
+        right: 0px;
+        position: relative;
     }
 }
