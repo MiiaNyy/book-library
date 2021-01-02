@@ -173,7 +173,7 @@ input[type="radio"] {
 }
 
 .book-card h4 {
-    font-size: 170%;
+    font-size: 1.6em;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(179, 179, 179, 0.829);
 }
