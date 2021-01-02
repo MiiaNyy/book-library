@@ -26,7 +26,7 @@ header>h1 {
 
 }
 
-/*add book button plus sign image*/
+/*open form button, plus sign image*/
 img {
     height: 50px;
     width: 50px;
@@ -58,7 +58,6 @@ input {
     margin-left: 40px;
 }
 
-
 input[type="text"],
 input[type="number"] {
     height: 25px;
@@ -74,7 +73,24 @@ input[type="radio"] {
     color: #06d6a0;
 }
 
-/*-------Book logs table elements---------*/
+
+/*This holds all the content*/
+.container {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    border-radius: 15px;
+}
+
+.library {
+    text-align: center;
+    margin: 40px auto;
+}
+
+
+/*--------------Book log styles---------------------*/
+
+/*Book logs table elements*/
 .tg {
     margin-top: 15px;
 }
@@ -92,7 +108,7 @@ input[type="radio"] {
     vertical-align: top
 }
 
-/*------Another book log elements-----*/
+/*Everything else book log elements*/
 
 .lib-logo-container {
     text-align: center;
@@ -126,29 +142,9 @@ input[type="radio"] {
 }
 
 
-/*If user trys to submit book without filling input fields this animation is run in form*/
-.inputs-not-filled {
-    animation: rotation 0.2s 0.1s linear;
-}
 
-/*When form is opened, background is blurred*/
-.filter-on {
-    filter: blur(5px);
-}
 
-/*This holds all the content*/
-.container {
-    width: 80%;
-    height: 100%;
-    margin: auto;
-    border-radius: 15px;
-}
-
-.library {
-    text-align: center;
-    margin: 40px auto;
-}
-
+/*--------Grid container and book card styles----------*/
 .grid-container {
     margin: 10px auto;
     display: grid;
@@ -173,9 +169,23 @@ input[type="radio"] {
 }
 
 .book-card h4 {
-    font-size: 1.6em;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin-bottom: 3px;
+    margin-top: 25px;
     text-shadow: 2px 2px 4px rgba(179, 179, 179, 0.829);
+}
+
+
+/*Book card title container*/
+.book-title {
+    text-align: center;
+    width: 80%;
+    height: 20%;
+    margin: auto;
+}
+
+.book-card p {
+    margin: 8px 0;
 }
 
 .book-info {
@@ -196,7 +206,7 @@ input[type="radio"] {
     color: black;
 }
 
-/*inside book-card button*/
+/*inside book-card, when pressed. class changes and color changes depending what is the reading status*/
 .reading-status-btn {
     width: 80px;
     height: 30px;
@@ -222,27 +232,6 @@ input[type="radio"] {
     animation: rotation 0.5s 0.1s linear;
 }
 
-
-
-@keyframes rotation {
-    25% {
-        transform: rotate(5deg);
-    }
-
-    50% {
-        transform: rotate(0deg);
-    }
-
-    75% {
-        transform: rotate(-5deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-
 .open-form-btn {
     background-color: rgb(0, 200, 236);
     height: 50px;
@@ -262,7 +251,7 @@ input[type="radio"] {
 }
 
 
-/*----------Form------------*/
+/*----------Form styles------------*/
 
 .close-form-btn {
     width: 5%;
@@ -286,12 +275,22 @@ input[type="radio"] {
     margin-bottom: 20px;
 }
 
+/*If user trys to submit book without filling input fields this animation is run in form*/
+.inputs-not-filled {
+    animation: rotation 0.2s 0.1s linear;
+}
+
+/*When form is opened, background is blurred*/
+.filter-on {
+    filter: blur(5px);
+}
+
 .text-label {
     margin-left: 50px;
     font-size: 18px;
 }
 
-.book-button {
+.forms-book-button {
     margin-top: 10px;
     width: 100px;
     height: 50px;
@@ -302,7 +301,7 @@ input[type="radio"] {
     transition-duration: 0.5s;
 }
 
-.book-button:hover {
+.forms-book-button:hover {
     transform: scale(1.1);
 }
 
@@ -350,9 +349,6 @@ input[type="radio"] {
     background-color: rgb(53, 215, 243);
 }
 
-
-
-
 #add-book-btn {
     margin-left: 100px;
     background-color: rgb(8, 202, 236);
@@ -370,6 +366,27 @@ input[type="radio"] {
 #reset-btn:hover {
     background-color: #06f096;
 }
+
+/*-----------Animation, to Form and reading status:hover-------------*/
+@keyframes rotation {
+    25% {
+        transform: rotate(5deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/*-------------Media Querrys------------------------------------*/
 
 @media screen and (max-width: 1400px) {
     .grid-container {

@@ -13,12 +13,11 @@ let bookCard = document.querySelector('.book-card');
 
 let inputFields = document.querySelectorAll('.input-field');
 
+//Book log counters
 let booksInLibrary = document.querySelector('.book-counter');
 let pagesReadCounter = document.querySelector('.pages-counter');
 let readBooksCounter = document.querySelector('.read-books-counter');
 let inProgressCounter = document.querySelector('.in-progress-counter');
-
-
 
 let allInputFieldsFilled = false;
 
@@ -58,16 +57,16 @@ function addBookToLibraryView(bookObj) {
     for (let key in bookObj) {
         switch (key) {
             case 'title':
-                bookInfo.innerHTML += "<div><h4>" + bookObj[key] + "</h4></div>";
+                bookInfo.innerHTML += "<div class='book-title'><h4>" + bookObj[key] + "</h4></div>";
                 break;
             case 'author':
-                bookInfo.innerHTML += "<div><p>Author:<br> " + bookObj[key] + "</p></div>";
+                bookInfo.innerHTML += "<p>Author:<br> " + bookObj[key] + "</p>";
                 break;
             case 'genre':
-                bookInfo.innerHTML += "<div><p> Genre:<br> " + bookObj[key] + "</p></div>";
+                bookInfo.innerHTML += "<p> Genre:<br> " + bookObj[key] + "</p>";
                 break;
             case 'pages':
-                bookInfo.innerHTML += "<div><p> " + bookObj[key] + " pages</p></div>";
+                bookInfo.innerHTML += "<p> " + bookObj[key] + " pages</p>";
                 break;
             case 'readingStatus':
                 if (bookObj[key] == 'read') {
@@ -80,6 +79,50 @@ function addBookToLibraryView(bookObj) {
                 break;
         }
     }
+    displayFontSize();
+}
+
+function getFontSize(textLength) {
+    let fontSize;
+    if(textLength >= 40) {
+        fontSize = 15;
+    }else if(textLength >= 25) {
+        fontSize = 18;
+    }else if(textLength >= 15) {
+        fontSize = 20;
+    }
+    return fontSize + 'px';
+}
+
+//This ensures that if the title of the book is long, titles font size gets smaller so it fits in the card
+function displayFontSize() {
+    const boxes = document.querySelectorAll('.book-title h4')
+    
+    boxes.forEach(box => {
+        box.style.fontSize = getFontSize(box.textContent.length)
+    })
+}
+
+function displayBookLogCounters() {
+    let pages = 0;
+    let read = 0;
+    let inProgress = 0;
+
+    for(let i = 0; i < library.length; i++) {
+        let bookObj = library[i];
+        for(let key in bookObj) {
+            if(key == 'readingStatus' && bookObj[key] == 'read') {    
+                pages += Number(bookObj['pages']); 
+                read++;        
+            }else if(key == 'readingStatus' && bookObj[key] == 'in-progress') {
+                inProgress++;
+            }           
+        }
+    }
+    booksInLibrary.innerHTML = library.length;
+    pagesReadCounter.innerHTML = pages;
+    readBooksCounter.innerHTML = read;
+    inProgressCounter.innerHTML = inProgress;
 }
 
 function displayBooks() {
@@ -130,7 +173,6 @@ function addNewBook(title, author, genre, pages, readingStatus, addToView) {
     }
 }
 
-
 function toggleFormVisibility() {
     if (form.style.display === "none") {
         form.style.display = "block";
@@ -141,6 +183,15 @@ function toggleFormVisibility() {
         form.style.display = "none";
 
     }
+}
+
+//In form when input fields are filled the border color changes to green
+function addColorWhenFilled() {
+    inputFields.forEach(function (input) {
+        input.addEventListener('keydown', function () {
+            input.style.borderColor = '#06d6a0';
+        })
+    });
 }
 
 function removeBook(event) {
@@ -249,15 +300,6 @@ function readLibraryFromStorage() {
 
 }
 
-
-function addColorWhenFilled() {
-    inputFields.forEach(function (input) {
-        input.addEventListener('keydown', function () {
-            input.style.borderColor = '#06d6a0';
-        })
-    });
-}
-
 function resetForm() {
     removeBackgroundFilter();
     form.reset();
@@ -268,28 +310,6 @@ function resetForm() {
     inputFields.forEach(function (input) {
         input.style.borderColor = 'black';
     });
-}
-
-function displayBookLogCounters() {
-    let pages = 0;
-    let read = 0;
-    let inProgress = 0;
-
-    for(let i = 0; i < library.length; i++) {
-        let bookObj = library[i];
-        for(let key in bookObj) {
-            if(key == 'readingStatus' && bookObj[key] == 'read') {    
-                pages += Number(bookObj['pages']); 
-                read++;        
-            }else if(key == 'readingStatus' && bookObj[key] == 'in-progress') {
-                inProgress++;
-            }           
-        }
-    }
-    booksInLibrary.innerHTML = library.length;
-    pagesReadCounter.innerHTML = pages;
-    readBooksCounter.innerHTML = read;
-    inProgressCounter.innerHTML = inProgress;
 }
 
 function addButtonListeners() {
