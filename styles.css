@@ -1,7 +1,7 @@
 body {
     font-family: 'Playfair Display', serif;
     height: 95vh;
-    
+
     background-image: url(libr1.jpg);
     background-size: cover;
 }
@@ -11,7 +11,8 @@ header {
     margin: auto;
     background-color: rgba(255, 255, 255, 0.952);
     max-width: 700px;
-    height: 150px;
+    height: 100px;
+    padding-bottom: 10px ;
     box-shadow: 4px 4px 7px -1px rgba(63, 61, 61, 0.75);
     border-radius: 15px;
     transition-duration: 0.5s;
@@ -41,12 +42,12 @@ form {
     z-index: 1;
     display: none;
     transition: all 1s linear;
-    position: absolute; 
-    left: 0; 
-    right: 0; 
+    position: absolute;
+    left: 0;
+    right: 0;
     top: 100px;
-    margin-left: auto; 
-    margin-right: auto; 
+    margin-left: auto;
+    margin-right: auto;
 }
 
 form h2 {
@@ -72,20 +73,42 @@ input[type="radio"] {
     margin-left: 100px;
     color: #06d6a0;
 }
-#book-log {   
-    background-color: #fffffff5;
-    font-size: 1em;
-    border: 10px double rgba(10, 10, 10, 0.041);
+
+/*-------Book logs table elements---------*/
+.tg {
+    margin-top: 15px;
 }
+
+.tg td {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 5px 8px;
+    word-break: normal;
+}
+
+.tg .tg-dvpl {
+    text-align: right;
+    vertical-align: top
+}
+
+/*------Another book log elements-----*/
 
 .lib-logo-container {
     text-align: center;
 }
 
 .logo {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 30px;
     height: 30px;
+}
+
+.book-log-divider {
+    background-color: #f3d949;
+    width: 60%;
+    height: 3px;
+    border: none;
 }
 
 #book-log h2 {
@@ -96,17 +119,12 @@ input[type="radio"] {
     text-shadow: 2px 2px 4px rgba(179, 179, 179, 0.829);
 
 }
-
-.log-counter {
-    margin-left: 15px;
+#book-log {
+    background-color: #fffffffa;
+    font-size: 1em;
+    border: 10px double rgba(10, 10, 10, 0.041);
 }
 
-.book-log-divider {
-    background-color: #f3d949;
-    width: 60%;
-    height: 3px;
-    border: none;
-}
 
 /*If user trys to submit book without filling input fields this animation is run in form*/
 .inputs-not-filled {
@@ -122,7 +140,6 @@ input[type="radio"] {
 .container {
     width: 80%;
     height: 100%;
-
     margin: auto;
     border-radius: 15px;
 }
@@ -130,27 +147,21 @@ input[type="radio"] {
 .library {
     text-align: center;
     margin: 40px auto;
-    width: 75%;
-    height: auto;
-    border-radius: 15px;
 }
 
 .grid-container {
-    text-align: center;
-    margin: 0px auto;
+    margin: 10px auto;
     display: grid;
-    width: auto;
-    grid-template-columns: repeat(5, 200px);;
+    width: fit-content;
+    grid-template-columns: repeat(5, 200px);
     grid-auto-rows: minmax(260px, 280px) 260px;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
-    justify-content:baseline;
 }
 
 .book-card {
-    text-align: left;
     font-size: 14px;
-    border-radius: 20px;    
+    border-radius: 20px;
     box-shadow: 5px 5px 17px -1px rgb(0, 0, 0);
     background-color: rgba(255, 255, 255, 0.986);
     transition-duration: 1s;
@@ -165,6 +176,7 @@ input[type="radio"] {
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(179, 179, 179, 0.829);
 }
+
 .book-info {
     text-align: center;
 }
@@ -178,6 +190,7 @@ input[type="radio"] {
     color: rgb(138, 136, 136);
     cursor: pointer;
 }
+
 .close-book-card:hover {
     color: black;
 }
@@ -214,12 +227,15 @@ input[type="radio"] {
     25% {
         transform: rotate(5deg);
     }
+
     50% {
         transform: rotate(0deg);
     }
+
     75% {
         transform: rotate(-5deg);
     }
+
     100% {
         transform: rotate(0deg);
     }
@@ -247,7 +263,7 @@ input[type="radio"] {
 
 /*----------Form------------*/
 
-.close-form-btn {    
+.close-form-btn {
     width: 5%;
     height: 5%;
     margin-left: 3%;
@@ -354,17 +370,36 @@ input[type="radio"] {
     background-color: #06f096;
 }
 
+@media screen and (max-width: 1400px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 200px);
 
-/*1000 asti on hyvä*/
+    }
+}
 
 
+@media screen and (max-width: 1100px) and (min-width: 950px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 200px);
+
+    }
+
+}
 
 @media only screen and (max-width: 950px) {
 
+    .open-form-btn {
+        top: 20px;
+        right: 0px;
+        position: relative;
+    }
+
     .grid-container {
         grid-template-columns: repeat(2, 235px);
+    }
 
-
+    #book-log {
+        font-size: 0.9em;
     }
 }
 
@@ -373,6 +408,7 @@ input[type="radio"] {
     .grid-container {
         grid-template-columns: repeat(2, 200px);
     }
+
 
 }
 
@@ -385,10 +421,10 @@ input[type="radio"] {
     #add-book-btn {
         margin-left: 50px;
     }
-    
+
     #reset-btn {
         margin-left: 20px;
-        
+
     }
 
     .grid-container {
@@ -398,14 +434,13 @@ input[type="radio"] {
 }
 
 @media only screen and (max-width: 530px) {
-    .grid-container {        
+    .grid-container {
         grid-template-columns: repeat(1, 200px);
         justify-content: center;
     }
 
-    .open-form-btn {
-        top: 20px;
-        right: 0px;
-        position: relative;
+
+    #book-log {
+        font-size: 0.9em;
     }
 }

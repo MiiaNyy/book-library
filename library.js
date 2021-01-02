@@ -14,14 +14,11 @@ let bookCard = document.querySelector('.book-card');
 let inputFields = document.querySelectorAll('.input-field');
 
 let booksInLibrary = document.querySelector('.book-counter');
-let pagesRead = document.querySelector('.pages-counter');
+let pagesReadCounter = document.querySelector('.pages-counter');
 let readBooksCounter = document.querySelector('.read-books-counter');
 let inProgressCounter = document.querySelector('.in-progress-counter');
 
-booksInLibrary = 0;
-pagesRead = 0;
-readBooksCounter = 0;
-inProgressCounter = 0;
+
 
 let allInputFieldsFilled = false;
 
@@ -89,8 +86,8 @@ function displayBooks() {
     for (let i = 0; i < library.length; i++) {
         addBookToLibraryView(library[i]);
     }
-    
-    console.log(library.length);
+
+    displayBookLogCounters();
 }
 
 function addNewBookFromForm() {
@@ -116,7 +113,7 @@ function addNewBookFromForm() {
 
 function toggleFormAnimation() {
     form.classList.add('inputs-not-filled');
-    form.addEventListener('animationend', function() {
+    form.addEventListener('animationend', function () {
         form.classList.remove('inputs-not-filled');
     });
 }
@@ -126,6 +123,7 @@ function addNewBook(title, author, genre, pages, readingStatus, addToView) {
     let newBook = new Book(title, author, genre, pages, readingStatus);
     pushBookToLibraryArr(newBook);
     saveLibraryToStorage();
+    displayBookLogCounters();
 
     if (addToView) {
         addBookToLibraryView(newBook);
@@ -155,6 +153,7 @@ function removeBook(event) {
         //Removes book from html doc
         book.parentNode.removeChild(book);
         saveLibraryToStorage();
+        displayBookLogCounters();
     }
 }
 
@@ -221,6 +220,7 @@ function toggleReadingStatus(event) {
     //changes reading status in the object
     toggleReadingStatusInObj(event);
     saveLibraryToStorage();
+    displayBookLogCounters();
 }
 
 function removeBackgroundFilter() {
@@ -268,7 +268,29 @@ function resetForm() {
     inputFields.forEach(function (input) {
         input.style.borderColor = 'black';
     });
-};
+}
+
+function displayBookLogCounters() {
+    let pages = 0;
+    let read = 0;
+    let inProgress = 0;
+
+    for(let i = 0; i < library.length; i++) {
+        let bookObj = library[i];
+        for(let key in bookObj) {
+            if(key == 'readingStatus' && bookObj[key] == 'read') {    
+                pages += Number(bookObj['pages']); 
+                read++;        
+            }else if(key == 'readingStatus' && bookObj[key] == 'in-progress') {
+                inProgress++;
+            }           
+        }
+    }
+    booksInLibrary.innerHTML = library.length;
+    pagesReadCounter.innerHTML = pages;
+    readBooksCounter.innerHTML = read;
+    inProgressCounter.innerHTML = inProgress;
+}
 
 function addButtonListeners() {
     //Closes book form

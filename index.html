@@ -19,27 +19,39 @@
         <header>
             <h1>My Library</h1>
             <hr class="divider" />
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"</p>
-        </header>
-
-        
-
+        </header>       
 
         <div class="open-form-btn">
             <img src="plus-512.png" alt="plus sign" />
         </div>
 
         <div class="library">
-            <div class="grid-container">
-            
+            <div class="grid-container">           
+
             <div id="book-log" class="book-card ">
                 <div class="lib-logo-container"><img class="logo" src="favicon.png"></div>            
                 <h2>Book log</h2>
                 <hr class="book-log-divider">
-                <p class="log-counter book-counter">Books in library: </p>
-                <p class="log-counter pages-counter">Pages read: </p>
-                <p class="log-counter read-books-counter">Read: </p>
-                <p class="log-counter in-progress-counter">In progress: </p>            
+                    <table class="tg">
+                        <tbody>
+                            <tr>
+                                <td>Books in library: </td>
+                                <td class="tg-dvpl"><span class="book-counter"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Pages read: </td>
+                                <td class="tg-dvpl"><span class="pages-counter"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Read: </td>
+                                <td class="tg-dvpl"><span class="read-books-counter"></span></td>
+                            </tr>
+                            <tr>
+                                <td>In progress: </td>
+                                <td class="tg-dvpl"><span class="in-progress-counter"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>            
             </div>
 
             <!--This is where the book cards lives-->
