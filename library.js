@@ -34,8 +34,23 @@ class Book {
     }
 }
 
-function pushBookToLibraryArr(book) {
-    library.push(book);
+function displayBooks() {
+    for (let i = 0; i < library.length; i++) {
+        addBookToLibraryView(library[i]);
+    }
+    displayBookLogCounters();
+}
+
+function addNewBook(title, author, genre, pages, readingStatus, addToView) {
+    let newBook = new Book(title, author, genre, pages, readingStatus);
+
+    pushBookToLibraryArr(newBook);
+    saveLibraryToStorage();
+    displayBookLogCounters();
+
+    if (addToView) {
+        addBookToLibraryView(newBook);
+    }
 }
 
 //This is what is shown in the screen
@@ -48,7 +63,6 @@ function addBookToLibraryView(bookObj) {
 
     bookCard.classList.add('book-card');
     bookInfo.classList.add('book-info');
-
 
     bookCard.innerHTML += "<span class='close-book-card'>&#10006;</span>"
     gridContainer.appendChild(bookCard);
@@ -82,55 +96,8 @@ function addBookToLibraryView(bookObj) {
     displayFontSize();
 }
 
-function getFontSize(textLength) {
-    let fontSize;
-    if(textLength >= 40) {
-        fontSize = 15;
-    }else if(textLength >= 25) {
-        fontSize = 18;
-    }else if(textLength >= 15) {
-        fontSize = 20;
-    }
-    return fontSize + 'px';
-}
-
-//This ensures that if the title of the book is long, titles font size gets smaller so it fits in the card
-function displayFontSize() {
-    const boxes = document.querySelectorAll('.book-title h4')
-    
-    boxes.forEach(box => {
-        box.style.fontSize = getFontSize(box.textContent.length)
-    })
-}
-
-function displayBookLogCounters() {
-    let pages = 0;
-    let read = 0;
-    let inProgress = 0;
-
-    for(let i = 0; i < library.length; i++) {
-        let bookObj = library[i];
-        for(let key in bookObj) {
-            if(key == 'readingStatus' && bookObj[key] == 'read') {    
-                pages += Number(bookObj['pages']); 
-                read++;        
-            }else if(key == 'readingStatus' && bookObj[key] == 'in-progress') {
-                inProgress++;
-            }           
-        }
-    }
-    booksInLibrary.innerHTML = library.length;
-    pagesReadCounter.innerHTML = pages;
-    readBooksCounter.innerHTML = read;
-    inProgressCounter.innerHTML = inProgress;
-}
-
-function displayBooks() {
-    for (let i = 0; i < library.length; i++) {
-        addBookToLibraryView(library[i]);
-    }
-
-    displayBookLogCounters();
+function pushBookToLibraryArr(book) {
+    library.push(book);
 }
 
 function addNewBookFromForm() {
@@ -161,18 +128,6 @@ function toggleFormAnimation() {
     });
 }
 
-function addNewBook(title, author, genre, pages, readingStatus, addToView) {
-
-    let newBook = new Book(title, author, genre, pages, readingStatus);
-    pushBookToLibraryArr(newBook);
-    saveLibraryToStorage();
-    displayBookLogCounters();
-
-    if (addToView) {
-        addBookToLibraryView(newBook);
-    }
-}
-
 function toggleFormVisibility() {
     if (form.style.display === "none") {
         form.style.display = "block";
@@ -181,17 +136,29 @@ function toggleFormVisibility() {
         openFormBtn.classList.add('filter-on');
     } else {
         form.style.display = "none";
-
     }
 }
 
-//In form when input fields are filled the border color changes to green
-function addColorWhenFilled() {
-    inputFields.forEach(function (input) {
-        input.addEventListener('keydown', function () {
-            input.style.borderColor = '#06d6a0';
-        })
-    });
+function displayBookLogCounters() {
+    let pages = 0;
+    let read = 0;
+    let inProgress = 0;
+
+    for(let i = 0; i < library.length; i++) {
+        let bookObj = library[i];
+        for(let key in bookObj) {
+            if(key == 'readingStatus' && bookObj[key] == 'read') {    
+                pages += Number(bookObj['pages']); 
+                read++;        
+            }else if(key == 'readingStatus' && bookObj[key] == 'in-progress') {
+                inProgress++;
+            }           
+        }
+    }
+    booksInLibrary.innerHTML = library.length;
+    pagesReadCounter.innerHTML = pages;
+    readBooksCounter.innerHTML = read;
+    inProgressCounter.innerHTML = inProgress;
 }
 
 function removeBook(event) {
@@ -212,11 +179,18 @@ function removeBookFromLibrary(book) {
     //Find right id from DOM element and compare it with library id so right object can be removed
     let id = book.id;
     for (let i = 0; i < library.length; i++) {
-
         if (library[i].id == id) {
             library.splice(i, 1);
         }
     }
+}
+
+function toggleReadingStatus(event) {
+    toggleReadingStatusView(event);
+    //changes reading status in the object
+    toggleReadingStatusInObj(event);
+    saveLibraryToStorage();
+    displayBookLogCounters();
 }
 
 function toggleReadingStatusInObj(event) {
@@ -225,7 +199,6 @@ function toggleReadingStatusInObj(event) {
     let id = bookCardElement.id;
 
     for (let i = 0; i < library.length; i++) {
-
         if (library[i].id == id) {
             let status = library[i].readingStatus;
             if (status == 'read') {
@@ -239,7 +212,6 @@ function toggleReadingStatusInObj(event) {
             console.log('books reading status is after pressing button: ' + library[i].readingStatus);
         }
     }
-
 }
 
 function toggleReadingStatusView(event) {
@@ -249,7 +221,6 @@ function toggleReadingStatusView(event) {
     let elementClass = element.classList;
 
     if (elementClass.contains('reading-status-btn')) {
-
         if (elementClass.contains('read')) {
             element.classList.remove('read');
             element.classList.add('not-read-btn');
@@ -266,14 +237,37 @@ function toggleReadingStatusView(event) {
     }
 }
 
-function toggleReadingStatus(event) {
-    toggleReadingStatusView(event);
-    //changes reading status in the object
-    toggleReadingStatusInObj(event);
-    saveLibraryToStorage();
-    displayBookLogCounters();
+//This ensures that if the title of the book is long, titles font size gets smaller so it fits in the card
+function displayFontSize() {
+    const boxes = document.querySelectorAll('.book-title h4')
+    
+    boxes.forEach(box => {
+        box.style.fontSize = getFontSize(box.textContent.length)
+    })
 }
 
+function getFontSize(textLength) {
+    let fontSize;
+    if(textLength >= 40) {
+        fontSize = 15;
+    }else if(textLength >= 25) {
+        fontSize = 18;
+    }else if(textLength >= 15) {
+        fontSize = 20;
+    }
+    return fontSize + 'px';
+}
+
+//In form when input fields are filled the border color changes to green
+function addColorWhenFilled() {
+    inputFields.forEach(function (input) {
+        input.addEventListener('keydown', function () {
+            input.style.borderColor = '#06d6a0';
+        })
+    });
+}
+
+//When form is open, rest of the background is blurred
 function removeBackgroundFilter() {
     document.querySelector('.library').classList.remove('filter-on');
     document.querySelector('header').classList.remove('filter-on');
@@ -283,7 +277,6 @@ function removeBackgroundFilter() {
 function saveLibraryToStorage() {
     localStorage.setItem('library', JSON.stringify(library));
 }
-
 //pulls books from local storage when page is refreshed
 function readLibraryFromStorage() {
 
@@ -312,6 +305,12 @@ function resetForm() {
     });
 }
 
+function start() {
+    addButtonListeners()
+    readLibraryFromStorage();
+    displayBooks();
+}
+
 function addButtonListeners() {
     //Closes book form
     closeFormBtn.addEventListener('click', function () {
@@ -327,7 +326,6 @@ function addButtonListeners() {
         }
     });
 
-
     //Open add book form
     openFormBtn.addEventListener('click', function () {
         toggleFormVisibility();
@@ -339,12 +337,6 @@ function addButtonListeners() {
         removeBook(event);
         toggleReadingStatus(event)
     });
-}
-
-function start() {
-    addButtonListeners()
-    readLibraryFromStorage();
-    displayBooks();
 }
 
 start();
