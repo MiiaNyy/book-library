@@ -1,5 +1,5 @@
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,130 +8,107 @@
         <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
         <title>Library</title>
     </head>
-    <body>
-
-        
+    <body>        
         <div class="container">
 
-        <br>
+            <br>
 
+            <header>
+                <h1>My Library</h1>
+                <hr class="divider" />
+            </header>       
 
-        <header>
-            <h1>My Library</h1>
-            <hr class="divider" />
-        </header>       
-
-        <div class="open-form-btn">
-            <img src="plus-512.png" alt="plus sign" />
-        </div>
-
-        <div class="library">
-            <div class="grid-container">           
-
-            <div id="book-log" class="book-card ">
-                <div class="lib-logo-container"><img class="logo" src="favicon.png"></div>            
-                <h2>Book log</h2>
-                <hr class="book-log-divider">
-                    <table class="tg">
-                        <tbody>
-                            <tr>
-                                <td>Books in library: </td>
-                                <td class="tg-dvpl"><span class="book-counter"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Pages read: </td>
-                                <td class="tg-dvpl"><span class="pages-counter"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Read: </td>
-                                <td class="tg-dvpl"><span class="read-books-counter"></span></td>
-                            </tr>
-                            <tr>
-                                <td>In progress: </td>
-                                <td class="tg-dvpl"><span class="in-progress-counter"></span></td>
-                            </tr>
-                        </tbody>
-                    </table>            
+            <div class="open-form-btn">
+                <img src="plus-512.png" alt="plus sign" />
             </div>
 
-            <!--This is where the book cards lives-->
+            <div class="library">
+                <div class="grid-container">           
+
+                <div id="book-log" class="book-card ">
+
+                    <div class="lib-logo-container">
+                        <img class="logo" src="favicon.png">
+                    </div>            
+
+                    <h2>Book log</h2>
+                    <hr class="book-log-divider">
+
+                        <table class="tg">
+                            <tbody>
+                                <tr>
+                                    <td>Books in library: </td>
+                                    <td class="tg-dvpl"><span class="book-counter"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Pages read: </td>
+                                    <td class="tg-dvpl"><span class="pages-counter"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Read: </td>
+                                    <td class="tg-dvpl"><span class="read-books-counter"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>In progress: </td>
+                                    <td class="tg-dvpl"><span class="in-progress-counter"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>            
+                </div>
+
+                <!--This is where the book cards lives-->
+                </div>
             </div>
 
-        </div>
+            <form>
+                <span class="close-form-btn">&#10006;</span>
+                <h2>Add Book</h2>
+                <hr class="divider"/>
 
-        <form>
-            <span class="close-form-btn">&#10006;</span>
-            <h2>Add Book</h2>
-            <hr class="divider" />
+                    <label for="title" class="text-label">Title:</label>
+                    <br />
+                    <input class="input-field" required type="text" id="title" name="title" value="" />
 
+                    <br/><br/>
 
-                <label for="title" class="text-label">Title:</label>
-                <br />
-                <input class="input-field" required type="text" id="title" name="title" value="" />
-                
+                    <label for="author" class="text-label">Author:</label>
+                    <br />
+                    <input class="input-field" required type="text" id="author" name="author" value="" />
+                    
+                    <br/><br/>
 
-                <br /><br />
+                    <label for="genre" class="text-label">Genre: </label>
+                    <br />
+                    <input class="input-field"  required type="text" id="genre" name="genre" value="" />
+                    
+                    <br/><br/>
 
-                <label for="author" class="text-label">Author:</label>
-                <br />
-                <input class="input-field" required type="text" id="author" name="author" value="" />
-                
+                    <label for="pages" class="text-label">How many pages?</label>
+                    <br/>
+                    <input class="input-field" required type="number" id="pages" name="pages" min="1" max="99999" value="0"/>
 
-                <br /><br />
+                    <br/><br/>
 
-                <label for="genre" class="text-label">Genre: </label>
-                <br />
-                <input class="input-field"  required type="text" id="genre" name="genre" value="" />
-                
+                    <label for="book-read" class="radio-container">Read<input type="radio" checked="checked" name="readingStatus" id="book-read" value="read"/>
+                        <span class="checkmark"></span>
+                    </label>
 
-                <br /><br />
+                    <label for="not-read" class="radio-container">Not read
+                        <input type="radio" name="readingStatus" id="not-read" value="not-read"/>
+                        <span class="checkmark"></span>
+                    </label>
 
-                <label for="pages" class="text-label">How many pages?</label>
-                <br />
+                    <label for="in-progress" class="radio-container"
+                        >In progress
+                        <input type="radio" id="in-progress" name="readingStatus" value="in-progress"/>
+                        <span class="checkmark"></span>
+                    </label>
 
-                <input class="input-field" required type="number" id="pages" name="pages" min="1" max="99999" value="0"/>
-
-
-                <br /><br />
-
-                <label for="book-read" class="radio-container"
-                    >Read
-                    <input
-                    type="radio"
-                    checked="checked"
-                    name="readingStatus"
-                    id="book-read"
-                    value="read"
-                    />
-                    <span class="checkmark"></span>
-                </label>
-                <label for="not-read" class="radio-container"
-                    >Not read
-                    <input
-                    type="radio"
-                    name="readingStatus"
-                    id="not-read"
-                    value="not-read"
-                    />
-                    <span class="checkmark"></span>
-                </label>
-                <label for="in-progress" class="radio-container"
-                    >In progress
-                    <input
-                    type="radio"
-                    id="in-progress"
-                    name="readingStatus"
-                    value="in-progress"
-                    />
-                    <span class="checkmark"></span>
-                </label>
-
-
-            <input type="button" value="Add book" class="forms-book-button" id="add-book-btn"/>
-            <input type="reset" value="Reset" class="forms-book-button" id="reset-btn" />
-        </form>
+                <input type="button" value="Add book" class="forms-book-button" id="add-book-btn"/>
+                <input type="reset" value="Reset" class="forms-book-button" id="reset-btn" />
+            </form>
         </div>
 
         <script src="library.js"></script>
     </body>
-    </html>
+</html>

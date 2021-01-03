@@ -1,14 +1,13 @@
 body {
     font-family: 'Playfair Display', serif;
     height: 95vh;
-
     background-image: url(libr1.jpg);
     background-size: cover;
 }
 
 header {
     text-align: center;
-    margin: auto;
+    margin: 0px auto;
     background-color: rgba(255, 255, 255, 0.952);
     max-width: 700px;
     height: 100px;
@@ -23,7 +22,6 @@ header>h1 {
     font-size: 50px;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(150, 150, 150, 0.829);
-
 }
 
 /*open form button, plus sign image*/
@@ -72,7 +70,6 @@ input[type="radio"] {
     margin-left: 100px;
     color: #06d6a0;
 }
-
 
 /*This holds all the content*/
 .container {
@@ -251,7 +248,7 @@ input[type="radio"] {
 }
 
 
-/*----------Form styles------------*/
+/*---------------Form styles----------------------*/
 
 .close-form-btn {
     width: 5%;
@@ -265,7 +262,6 @@ input[type="radio"] {
 
 .close-form-btn:hover {
     color: rgb(42, 41, 41);
-
 }
 
 .divider {
@@ -304,7 +300,6 @@ input[type="radio"] {
 .forms-book-button:hover {
     transform: scale(1.1);
 }
-
 
 /* The radio button container */
 .radio-container {
@@ -391,7 +386,6 @@ input[type="radio"] {
 @media screen and (max-width: 1400px) {
     .grid-container {
         grid-template-columns: repeat(4, 200px);
-
     }
 }
 
@@ -399,13 +393,10 @@ input[type="radio"] {
 @media screen and (max-width: 1100px) and (min-width: 950px) {
     .grid-container {
         grid-template-columns: repeat(3, 200px);
-
     }
-
 }
 
 @media only screen and (max-width: 950px) {
-
     .open-form-btn {
         top: 20px;
         right: 0px;
@@ -422,16 +413,12 @@ input[type="radio"] {
 }
 
 @media only screen and (max-width: 720px) {
-
     .grid-container {
         grid-template-columns: repeat(2, 200px);
     }
-
-
 }
 
 @media only screen and (max-width: 570px) {
-
     form {
         width: 330px;
     }
@@ -442,21 +429,30 @@ input[type="radio"] {
 
     #reset-btn {
         margin-left: 20px;
-
     }
 
     .grid-container {
         grid-template-columns: repeat(2, 180px);
     }
-
 }
 
 @media only screen and (max-width: 530px) {
+    header {
+        width: 300px;
+    }
+    
+    header  h1{
+        margin-top: 10px;
+    }
+
+    .library {
+        padding-bottom: 50px;
+    }
+    
     .grid-container {
         grid-template-columns: repeat(1, 200px);
         justify-content: center;
     }
-
 
     #book-log {
         font-size: 0.9em;
