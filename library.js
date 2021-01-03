@@ -339,13 +339,4 @@ function addButtonListeners() {
     });
 }
 
-function touchListeners() {
-    openFormBtn.addEventListener('touchstart', function() {
-        openFormBtn.classList.add('open-form-btn-hover');
-    })
-    
-}
-
-
-
 start();
